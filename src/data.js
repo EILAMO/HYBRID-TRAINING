@@ -14,11 +14,13 @@ function getCurrentWeight() {
 function calcTargets() {
   const kg = getCurrentWeight();
   const protein = Math.round(kg * USER_BASE.proteinPerKg);
+  // Mifflin-St Jeor BMR
   const bmr = Math.round(10 * kg + 6.25 * USER_BASE.height - 5 * USER_BASE.age + 5);
-  const kcal = Math.round(bmr * 1.725);
-  const fat = Math.round(kg * 1.0);
+  // Recomp = slight deficit from maintenance (1.55 moderate active - 200kcal)
+  const kcal = Math.round(bmr * 1.55) - 200;
+  const fat = Math.round(kg * 0.9);
   const carbKcal = kcal - protein * 4 - fat * 9;
-  const carbs = Math.round(Math.max(0, carbKcal / 4));
+  const carbs = Math.round(Math.max(150, carbKcal / 4));
   return { kcal, protein, carbs, fat };
 }
 
@@ -32,20 +34,20 @@ const USER = {
 
 // ─── WEEKLY SCHEDULE ──────────────────────────────────────────────────
 const WEEK_PLAN = [
-  { day: 'Monday',    session: 'ANT-A', type: 'gym' },
+  { day: 'Monday',    session: 'ANT-A',    type: 'gym' },
   { day: 'Tuesday',   session: 'INTERVAL', type: 'run' },
-  { day: 'Wednesday', session: 'POST-A', type: 'gym' },
-  { day: 'Thursday',  session: 'TEMPO', type: 'run' },
-  { day: 'Friday',    session: 'ANT-B', type: 'gym' },
-  { day: 'Saturday',  session: 'EASY', type: 'run' },
-  { day: 'Sunday',    session: 'POST-B', type: 'gym' },
+  { day: 'Wednesday', session: 'POST-A',   type: 'gym' },
+  { day: 'Thursday',  session: 'TEMPO',    type: 'run' },
+  { day: 'Friday',    session: 'ANT-B',    type: 'gym' },
+  { day: 'Saturday',  session: 'EASY',     type: 'run' },
+  { day: 'Sunday',    session: 'POST-B',   type: 'gym' },
 ];
 
 // ─── WORKOUT DEFINITIONS ──────────────────────────────────────────────
 const WORKOUTS = {
   'ANT-A': {
     name: 'Anterior A', short: 'ANT-A', type: 'gym',
-    focus: 'Chest · Shoulders · Biceps · Quads',
+    focus: 'Chest - Shoulders - Biceps - Quads',
     movements: [
       { id:'incline_smith',  name:'Incline Bench (Smith)', sets:3, repRange:'6-10',  muscle:'Chest' },
       { id:'pec_deck',       name:'Pec Deck',              sets:3, repRange:'10-15', muscle:'Chest' },
@@ -60,7 +62,7 @@ const WORKOUTS = {
   },
   'ANT-B': {
     name: 'Anterior B', short: 'ANT-B', type: 'gym',
-    focus: 'Chest · Shoulders · Biceps · Quads',
+    focus: 'Chest - Shoulders - Biceps - Quads',
     movements: [
       { id:'incline_smith',  name:'Incline Bench (Smith)', sets:3, repRange:'6-10',  muscle:'Chest' },
       { id:'pec_deck',       name:'Pec Deck',              sets:3, repRange:'10-15', muscle:'Chest' },
@@ -75,34 +77,34 @@ const WORKOUTS = {
   },
   'POST-A': {
     name: 'Posterior A', short: 'POST-A', type: 'gym',
-    focus: 'Back · Hamstrings · Glutes · Triceps',
+    focus: 'Back - Hamstrings - Glutes - Triceps',
     movements: [
-      { id:'tbar_row',     name:'T-Bar Row',           sets:3, repRange:'6-10',  muscle:'Back' },
-      { id:'lat_pulldown', name:'Lat Pulldown',         sets:2, repRange:'8-12',  muscle:'Back' },
-      { id:'cable_row',    name:'Seated Cable Row',     sets:2, repRange:'8-12',  muscle:'Back' },
-      { id:'rdl',          name:'RDL',                  sets:3, repRange:'6-10',  muscle:'Hamstrings' },
-      { id:'leg_curl',     name:'Leg Curl',             sets:3, repRange:'10-15', muscle:'Hamstrings' },
-      { id:'hip_thrust',   name:'Hip Thrust',           sets:3, repRange:'8-12',  muscle:'Glutes' },
-      { id:'oh_tricep',    name:'OH Tricep Extension',  sets:3, repRange:'10-15', muscle:'Triceps' },
-      { id:'pushdown',     name:'Pushdown',             sets:2, repRange:'10-15', muscle:'Triceps' },
-      { id:'rear_delt',    name:'Rear Delts',           sets:3, repRange:'15-20', muscle:'Shoulders' },
-      { id:'reverse_curl', name:'Reverse Curl',         sets:3, repRange:'15-20', muscle:'Forearms' },
+      { id:'tbar_row',     name:'T-Bar Row',          sets:3, repRange:'6-10',  muscle:'Back' },
+      { id:'lat_pulldown', name:'Lat Pulldown',        sets:2, repRange:'8-12',  muscle:'Back' },
+      { id:'cable_row',    name:'Seated Cable Row',    sets:2, repRange:'8-12',  muscle:'Back' },
+      { id:'rdl',          name:'RDL',                 sets:3, repRange:'6-10',  muscle:'Hamstrings' },
+      { id:'leg_curl',     name:'Leg Curl',            sets:3, repRange:'10-15', muscle:'Hamstrings' },
+      { id:'hip_thrust',   name:'Hip Thrust',          sets:3, repRange:'8-12',  muscle:'Glutes' },
+      { id:'oh_tricep',    name:'OH Tricep Extension', sets:3, repRange:'10-15', muscle:'Triceps' },
+      { id:'pushdown',     name:'Pushdown',            sets:2, repRange:'10-15', muscle:'Triceps' },
+      { id:'rear_delt',    name:'Rear Delts',          sets:3, repRange:'15-20', muscle:'Shoulders' },
+      { id:'reverse_curl', name:'Reverse Curl',        sets:3, repRange:'15-20', muscle:'Forearms' },
     ]
   },
   'POST-B': {
     name: 'Posterior B', short: 'POST-B', type: 'gym',
-    focus: 'Back · Hamstrings · Glutes · Triceps',
+    focus: 'Back - Hamstrings - Glutes - Triceps',
     movements: [
-      { id:'tbar_row',     name:'T-Bar Row',           sets:3, repRange:'6-10',  muscle:'Back' },
-      { id:'lat_pulldown', name:'Lat Pulldown',         sets:2, repRange:'8-12',  muscle:'Back' },
-      { id:'cable_row',    name:'Seated Cable Row',     sets:2, repRange:'8-12',  muscle:'Back' },
-      { id:'rdl',          name:'RDL',                  sets:3, repRange:'6-10',  muscle:'Hamstrings' },
-      { id:'leg_curl',     name:'Leg Curl',             sets:3, repRange:'10-15', muscle:'Hamstrings' },
-      { id:'hip_thrust',   name:'Hip Thrust',           sets:3, repRange:'8-12',  muscle:'Glutes' },
-      { id:'oh_tricep',    name:'OH Tricep Extension',  sets:3, repRange:'10-15', muscle:'Triceps' },
-      { id:'pushdown',     name:'Pushdown',             sets:2, repRange:'10-15', muscle:'Triceps' },
-      { id:'rear_delt',    name:'Rear Delts',           sets:3, repRange:'15-20', muscle:'Shoulders' },
-      { id:'reverse_curl', name:'Reverse Curl',         sets:3, repRange:'15-20', muscle:'Forearms' },
+      { id:'tbar_row',     name:'T-Bar Row',          sets:3, repRange:'6-10',  muscle:'Back' },
+      { id:'lat_pulldown', name:'Lat Pulldown',        sets:2, repRange:'8-12',  muscle:'Back' },
+      { id:'cable_row',    name:'Seated Cable Row',    sets:2, repRange:'8-12',  muscle:'Back' },
+      { id:'rdl',          name:'RDL',                 sets:3, repRange:'6-10',  muscle:'Hamstrings' },
+      { id:'leg_curl',     name:'Leg Curl',            sets:3, repRange:'10-15', muscle:'Hamstrings' },
+      { id:'hip_thrust',   name:'Hip Thrust',          sets:3, repRange:'8-12',  muscle:'Glutes' },
+      { id:'oh_tricep',    name:'OH Tricep Extension', sets:3, repRange:'10-15', muscle:'Triceps' },
+      { id:'pushdown',     name:'Pushdown',            sets:2, repRange:'10-15', muscle:'Triceps' },
+      { id:'rear_delt',    name:'Rear Delts',          sets:3, repRange:'15-20', muscle:'Shoulders' },
+      { id:'reverse_curl', name:'Reverse Curl',        sets:3, repRange:'15-20', muscle:'Forearms' },
     ]
   },
 };
@@ -112,6 +114,7 @@ Object.values(WORKOUTS).forEach(w => w.movements.forEach(m => {
   if (!ALL_MOVEMENTS.find(x => x.id === m.id)) ALL_MOVEMENTS.push(m);
 }));
 
+// ─── UTILITIES ────────────────────────────────────────────────────────
 function calc1RM(kg, reps) {
   if (!kg || !reps) return 0;
   if (reps === 1) return Math.round(kg);
@@ -133,7 +136,7 @@ function vo2ToPaces(vo2) {
 
 function secsToMMSS(s) {
   const m = Math.floor(s / 60); const sec = s % 60;
-  return `${m}:${String(sec).padStart(2,'0')}`;
+  return m + ':' + String(sec).padStart(2,'0');
 }
 
 function today() { return new Date().toISOString().split('T')[0]; }
@@ -150,7 +153,7 @@ function dayName() {
 
 function sessionVolume(session) {
   let vol = 0;
-  (session.sets || []).forEach(s => { vol += (s.kg||0) * (s.reps||0); });
+  (session.sets || []).forEach(s => { vol += (parseFloat(s.kg)||0) * (parseInt(s.reps)||0); });
   return Math.round(vol);
 }
 
@@ -162,7 +165,7 @@ function checkDeload() {
   if (avgFatigue >= 4.0) return 'Average fatigue ' + avgFatigue.toFixed(1) + '/5 over last 4 sessions';
   const vols = last4.map(s => sessionVolume(s));
   const stalled = vols.slice(1).every((v,i) => v <= vols[i] * 1.03);
-  if (stalled && sessions.length >= 6) return 'Volume has stalled for 4 sessions — recovery needed';
+  if (stalled && sessions.length >= 6) return 'Volume has stalled for 4 sessions';
   if (sessions.length > 0 && sessions.length % 20 === 0) return 'Every 5 weeks: scheduled deload recommended';
   return null;
 }
