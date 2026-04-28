@@ -11,7 +11,7 @@ function renderRun() {
 
   const recentHTML = runs.length ? runs.map(r => {
     const pace = r.distance && r.duration ? secsToMMSS(Math.round(r.duration * 60 / r.distance)) : '--';
-    return '<div class="hist-row">' +
+    return '<div class="hist-row">' +a
       '<div class="hist-left">' +
         '<div class="hist-name">' + r.runType + '</div>' +
         '<div class="hist-date">' + formatDate(r.date) + (r.fromImage ? ' · 📷' : '') + '</div>' +
