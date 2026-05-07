@@ -44,6 +44,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
         <span>Progress</span>
       </button>
+      <button class="nav-btn" data-view="activities">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
+        <span>Activity</span>
+      </button>
       <button class="nav-btn" data-view="body">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         <span>Body</span>
@@ -55,6 +59,7 @@
       <div id="view-run" class="view"></div>
       <div id="view-nutrition" class="view"></div>
       <div id="view-progress" class="view"></div>
+      <div id="view-activities" class="view"></div>
       <div id="view-body" class="view"></div>
     </main>
     <div id="modal-overlay" class="hidden"><div id="modal-box"><div class="modal-handle"></div><div id="modal-content"></div></div></div>
@@ -70,6 +75,7 @@
   <script src="src/views/run.js"></script>
   <script src="src/views/nutrition.js"></script>
   <script src="src/views/progress.js"></script>
+  <script src="src/views/activities.js"></script>
   <script src="src/views/body.js"></script>
   <script src="src/app.js"></script>
 </body>
