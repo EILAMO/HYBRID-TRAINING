@@ -14,9 +14,7 @@ function getCurrentWeight() {
 function calcTargets() {
   const kg = getCurrentWeight();
   const protein = Math.round(kg * USER_BASE.proteinPerKg);
-  // Mifflin-St Jeor BMR
   const bmr = Math.round(10 * kg + 6.25 * USER_BASE.height - 5 * USER_BASE.age + 5);
-  // Recomp = slight deficit from maintenance (1.55 moderate active - 200kcal)
   const kcal = Math.round(bmr * 1.55) - 200;
   const fat = Math.round(kg * 0.9);
   const carbKcal = kcal - protein * 4 - fat * 9;
@@ -47,64 +45,66 @@ const WEEK_PLAN = [
 const WORKOUTS = {
   'ANT-A': {
     name: 'Anterior A', short: 'ANT-A', type: 'gym',
-    focus: 'Chest - Shoulders - Biceps - Quads',
+    focus: 'Quads · Chest · Shoulders · Biceps',
     movements: [
-      { id:'incline_smith',  name:'Incline Bench (Smith)', sets:3, repRange:'6-10',  muscle:'Chest' },
-      { id:'pec_deck',       name:'Pec Deck',              sets:3, repRange:'10-15', muscle:'Chest' },
-      { id:'ohp',            name:'Overhead Press',        sets:3, repRange:'6-10',  muscle:'Shoulders' },
-      { id:'lateral_raise',  name:'Lateral Raises',        sets:2, repRange:'10-15', muscle:'Shoulders' },
-      { id:'barbell_curl',   name:'Barbell Curl',          sets:3, repRange:'8-12',  muscle:'Biceps' },
-      { id:'hammer_curl',    name:'Hammer Curls',          sets:2, repRange:'8-12',  muscle:'Biceps' },
-      { id:'pendulum_squat', name:'Pendulum Squat',        sets:3, repRange:'6-10',  muscle:'Quads' },
+      { id:'back_squat',     name:'Back Squat',            sets:4, repRange:'6-10',  muscle:'Quads' },
       { id:'leg_extension',  name:'Leg Extension',         sets:3, repRange:'10-15', muscle:'Quads' },
+      { id:'incline_smith',  name:'Incline Bench (Smith)', sets:4, repRange:'6-10',  muscle:'Chest' },
+      { id:'pec_deck',       name:'Pec Deck',              sets:3, repRange:'10-15', muscle:'Chest' },
+      { id:'low_cable_fly',  name:'Low Cable Fly',         sets:2, repRange:'10-15', muscle:'Chest' },
+      { id:'ohp',            name:'Overhead Press',        sets:3, repRange:'6-10',  muscle:'Shoulders' },
+      { id:'lateral_raise',  name:'Lateral Raises',        sets:4, repRange:'10-15', muscle:'Shoulders' },
+      { id:'bayesian_curl',  name:'Bayesian Curl',         sets:3, repRange:'8-12',  muscle:'Biceps' },
+      { id:'hammer_curl',    name:'Hammer Curls',          sets:2, repRange:'8-12',  muscle:'Biceps' },
       { id:'seated_calf',    name:'Seated Calf Raises',    sets:4, repRange:'15-20', muscle:'Calves' },
     ]
   },
   'ANT-B': {
     name: 'Anterior B', short: 'ANT-B', type: 'gym',
-    focus: 'Chest - Shoulders - Biceps - Quads',
+    focus: 'Quads · Chest · Shoulders · Biceps',
     movements: [
-      { id:'incline_smith',  name:'Incline Bench (Smith)', sets:3, repRange:'6-10',  muscle:'Chest' },
-      { id:'pec_deck',       name:'Pec Deck',              sets:3, repRange:'10-15', muscle:'Chest' },
-      { id:'ohp',            name:'Overhead Press',        sets:3, repRange:'6-10',  muscle:'Shoulders' },
-      { id:'lateral_raise',  name:'Lateral Raises',        sets:2, repRange:'10-15', muscle:'Shoulders' },
-      { id:'barbell_curl',   name:'Barbell Curl',          sets:3, repRange:'8-12',  muscle:'Biceps' },
-      { id:'hammer_curl',    name:'Hammer Curls',          sets:2, repRange:'8-12',  muscle:'Biceps' },
+      { id:'hack_squat',     name:'Hack Squat',            sets:4, repRange:'6-10',  muscle:'Quads' },
       { id:'leg_press_quad', name:'Leg Press (Quad focus)',sets:3, repRange:'6-10',  muscle:'Quads' },
-      { id:'leg_extension',  name:'Leg Extension',         sets:3, repRange:'10-15', muscle:'Quads' },
-      { id:'seated_calf',    name:'Seated Calf Raises',    sets:4, repRange:'15-20', muscle:'Calves' },
+      { id:'leg_extension',  name:'Leg Extension',         sets:2, repRange:'10-15', muscle:'Quads' },
+      { id:'incline_smith',  name:'Incline Bench (Smith)', sets:4, repRange:'6-10',  muscle:'Chest' },
+      { id:'pec_deck',       name:'Pec Deck',              sets:3, repRange:'10-15', muscle:'Chest' },
+      { id:'low_cable_fly',  name:'Low Cable Fly',         sets:2, repRange:'10-15', muscle:'Chest' },
+      { id:'ohp',            name:'Overhead Press',        sets:3, repRange:'6-10',  muscle:'Shoulders' },
+      { id:'cable_lateral',  name:'Cable Lateral Raise',   sets:4, repRange:'10-15', muscle:'Shoulders' },
+      { id:'bayesian_curl',  name:'Bayesian Curl',         sets:3, repRange:'8-12',  muscle:'Biceps' },
+      { id:'hammer_curl',    name:'Hammer Curls',          sets:2, repRange:'8-12',  muscle:'Biceps' },
     ]
   },
   'POST-A': {
     name: 'Posterior A', short: 'POST-A', type: 'gym',
-    focus: 'Back - Hamstrings - Glutes - Triceps',
+    focus: 'Back · Hamstrings · Glutes · Triceps',
     movements: [
-      { id:'tbar_row',     name:'T-Bar Row',          sets:3, repRange:'6-10',  muscle:'Back' },
-      { id:'lat_pulldown', name:'Lat Pulldown',        sets:2, repRange:'8-12',  muscle:'Back' },
-      { id:'cable_row',    name:'Seated Cable Row',    sets:2, repRange:'8-12',  muscle:'Back' },
-      { id:'rdl',          name:'RDL',                 sets:3, repRange:'6-10',  muscle:'Hamstrings' },
-      { id:'leg_curl',     name:'Leg Curl',            sets:3, repRange:'10-15', muscle:'Hamstrings' },
-      { id:'hip_thrust',   name:'Hip Thrust',          sets:3, repRange:'8-12',  muscle:'Glutes' },
-      { id:'oh_tricep',    name:'OH Tricep Extension', sets:3, repRange:'10-15', muscle:'Triceps' },
-      { id:'pushdown',     name:'Pushdown',            sets:2, repRange:'10-15', muscle:'Triceps' },
-      { id:'rear_delt',    name:'Rear Delts',          sets:3, repRange:'15-20', muscle:'Shoulders' },
-      { id:'reverse_curl', name:'Reverse Curl',        sets:3, repRange:'15-20', muscle:'Forearms' },
+      { id:'tbar_row',     name:'T-Bar Row',           sets:3, repRange:'6-10',  muscle:'Back' },
+      { id:'lat_pulldown', name:'Lat Pulldown',         sets:3, repRange:'8-12',  muscle:'Back' },
+      { id:'cable_row',    name:'Seated Cable Row',     sets:2, repRange:'8-12',  muscle:'Back' },
+      { id:'rdl',          name:'RDL',                  sets:4, repRange:'6-10',  muscle:'Hamstrings' },
+      { id:'leg_curl',     name:'Leg Curl',             sets:3, repRange:'10-15', muscle:'Hamstrings' },
+      { id:'hip_thrust',   name:'Hip Thrust',           sets:3, repRange:'8-12',  muscle:'Glutes' },
+      { id:'face_pull',    name:'Face Pull',            sets:3, repRange:'15-20', muscle:'Shoulders' },
+      { id:'oh_tricep',    name:'OH Tricep Extension',  sets:3, repRange:'10-15', muscle:'Triceps' },
+      { id:'pushdown',     name:'Pushdown',             sets:2, repRange:'10-15', muscle:'Triceps' },
+      { id:'reverse_curl', name:'Reverse Curl',         sets:2, repRange:'15-20', muscle:'Forearms' },
     ]
   },
   'POST-B': {
     name: 'Posterior B', short: 'POST-B', type: 'gym',
-    focus: 'Back - Hamstrings - Glutes - Triceps',
+    focus: 'Back · Hamstrings · Glutes · Triceps',
     movements: [
-      { id:'tbar_row',     name:'T-Bar Row',          sets:3, repRange:'6-10',  muscle:'Back' },
-      { id:'lat_pulldown', name:'Lat Pulldown',        sets:2, repRange:'8-12',  muscle:'Back' },
-      { id:'cable_row',    name:'Seated Cable Row',    sets:2, repRange:'8-12',  muscle:'Back' },
-      { id:'rdl',          name:'RDL',                 sets:3, repRange:'6-10',  muscle:'Hamstrings' },
-      { id:'leg_curl',     name:'Leg Curl',            sets:3, repRange:'10-15', muscle:'Hamstrings' },
-      { id:'hip_thrust',   name:'Hip Thrust',          sets:3, repRange:'8-12',  muscle:'Glutes' },
-      { id:'oh_tricep',    name:'OH Tricep Extension', sets:3, repRange:'10-15', muscle:'Triceps' },
-      { id:'pushdown',     name:'Pushdown',            sets:2, repRange:'10-15', muscle:'Triceps' },
-      { id:'rear_delt',    name:'Rear Delts',          sets:3, repRange:'15-20', muscle:'Shoulders' },
-      { id:'reverse_curl', name:'Reverse Curl',        sets:3, repRange:'15-20', muscle:'Forearms' },
+      { id:'lat_pulldown', name:'Lat Pulldown',         sets:3, repRange:'8-12',  muscle:'Back' },
+      { id:'tbar_row',     name:'T-Bar Row',            sets:3, repRange:'6-10',  muscle:'Back' },
+      { id:'cable_row',    name:'Seated Cable Row',     sets:2, repRange:'8-12',  muscle:'Back' },
+      { id:'rdl',          name:'RDL',                  sets:4, repRange:'6-10',  muscle:'Hamstrings' },
+      { id:'hip_thrust',   name:'Hip Thrust',           sets:3, repRange:'8-12',  muscle:'Glutes' },
+      { id:'leg_curl',     name:'Leg Curl',             sets:3, repRange:'10-15', muscle:'Hamstrings' },
+      { id:'face_pull',    name:'Face Pull',            sets:3, repRange:'15-20', muscle:'Shoulders' },
+      { id:'oh_tricep',    name:'OH Tricep Extension',  sets:3, repRange:'10-15', muscle:'Triceps' },
+      { id:'pushdown',     name:'Pushdown',             sets:2, repRange:'10-15', muscle:'Triceps' },
+      { id:'reverse_curl', name:'Reverse Curl',         sets:2, repRange:'15-20', muscle:'Forearms' },
     ]
   },
 };
